@@ -15,7 +15,7 @@ urls = (
 
 
 app = web.application(urls, globals())
-session = web.session.Session(app, web.session.DiskStore("sessions"), initializer={'user': 'none'})
+session = web.session.Session(app, web.session.DiskStore("sessions"), initializer={'user': None})
 session_data = session._initializer
 
 
@@ -63,8 +63,11 @@ class CheckLogin:
 
 class Logout:
     def GET(self):
+        session['user'] = None
+        session_data['user'] = None
+
         session.kill()
-        return  "success"
+        return "success"
 
 
 if __name__ == "__main__":
